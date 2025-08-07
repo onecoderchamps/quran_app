@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SholatScreen from '../home/SholatScreen';
 import HomeScreen from '../home/HomeScreen';
 import AkunScreen from '../home/AkunScreen';
+import TafsirModeScreen from '../home/TafsirModeScreen';
 
 // Import satu set aset gambar untuk ikon tab
 const HomeIcon = require('../assets/quran.png');
@@ -17,6 +18,7 @@ const Stack = createNativeStackNavigator();
 const MainStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Home" component={MainNavigator} />
+    <Stack.Screen name="TafsirMode" component={TafsirModeScreen} />
   </Stack.Navigator>
 );
 

@@ -26,7 +26,7 @@ const HomeScreen = () => {
           tabBarInactiveTintColor: '#888',
           tabBarIndicatorStyle: {
             backgroundColor: '#214937',
-            height: 5,
+            height: 2,
           },
           tabBarStyle: {
             backgroundColor: '#F5F5DC',

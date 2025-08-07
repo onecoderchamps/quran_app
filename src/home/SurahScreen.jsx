@@ -42,7 +42,6 @@ const SurahListScreen = ({ navigation }) => {
     setFilteredQuranList(filteredData);
   };
   
-  // Fungsi untuk menghapus input pencarian
   const clearSearch = () => {
     setSearchQuery('');
   };
@@ -52,11 +51,19 @@ const SurahListScreen = ({ navigation }) => {
     setIsModalVisible(true);
   };
 
+  // Fungsi yang dimodifikasi untuk navigasi
   const handleModeSelect = (mode) => {
     setIsModalVisible(false);
     if (selectedSurah) {
-      console.log(`Navigasi ke ${mode} untuk Surah ${selectedSurah.name_latin}`);
-      // Tambahkan navigasi aktual di sini
+      if (mode === 'Tafsir Mode') {
+        console.log(`Navigasi ke ${mode} untuk Surah ${selectedSurah.name_latin}`);
+
+        // Navigasi ke layar 'TafsirMode' dan kirim nomor surah sebagai parameter
+        navigation.navigate('TafsirMode', { surahNumber: Number(selectedSurah.number) });
+      } else {
+        console.log(`Navigasi ke ${mode} untuk Surah ${selectedSurah.name_latin}`);
+        // Tambahkan navigasi untuk mode lain di siniw
+      }
     }
   };
 
@@ -87,7 +94,6 @@ const SurahListScreen = ({ navigation }) => {
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <View style={styles.container}>
-        {/* Kolom Pencarian */}
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.searchInput}
@@ -96,7 +102,6 @@ const SurahListScreen = ({ navigation }) => {
             value={searchQuery}
             onChangeText={setSearchQuery}
           />
-          {/* Ikon silang hanya muncul jika ada teks di kolom pencarian */}
           {searchQuery.length > 0 && (
             <TouchableOpacity onPress={clearSearch} style={styles.clearButton}>
               <Text style={styles.clearButtonText}>X</Text>
@@ -112,7 +117,6 @@ const SurahListScreen = ({ navigation }) => {
         />
       </View>
 
-      {/* Komponen Modal */}
       <Modal
         animationType="fade"
         transparent={true}
@@ -174,8 +178,6 @@ const styles = StyleSheet.create({
   searchContainer: {
     padding: 15,
     backgroundColor: '#F5F5DC',
-    // borderBottomWidth: 1,
-    // borderBottomColor: '#ddd',
     flexDirection: 'row',
     alignItems: 'center',
     position: 'relative',
@@ -193,7 +195,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 2,
-    paddingRight: 40, // Memberi ruang untuk tombol silang
+    paddingRight: 40,
   },
   clearButton: {
     position: 'absolute',
@@ -223,7 +225,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-  // === Styling untuk Segi Delapan ===
   surahNumberEightagonContainer: {
     width: 50,
     height: 50,
@@ -262,7 +263,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  // === Akhir Styling Segi Delapan ===
   surahNameContainer: {
     flex: 1,
   },
@@ -289,7 +289,6 @@ const styles = StyleSheet.create({
     color: '#888',
     marginTop: 2,
   },
-  // === Styling Modal Pop-up ===
   modalOverlay: {
     flex: 1,
     justifyContent: 'center',
