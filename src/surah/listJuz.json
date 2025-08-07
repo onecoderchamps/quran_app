@@ -1,0 +1,392 @@
+[
+  {
+    "number": 1,
+    "start_surah": {
+      "number": 1,
+      "name_latin": "Al-Fatihah",
+      "ayah": 1
+    },
+    "end_surah": {
+      "number": 2,
+      "name_latin": "Al-Baqarah",
+      "ayah": 141
+    }
+  },
+  {
+    "number": 2,
+    "start_surah": {
+      "number": 2,
+      "name_latin": "Al-Baqarah",
+      "ayah": 142
+    },
+    "end_surah": {
+      "number": 2,
+      "name_latin": "Al-Baqarah",
+      "ayah": 252
+    }
+  },
+  {
+    "number": 3,
+    "start_surah": {
+      "number": 2,
+      "name_latin": "Al-Baqarah",
+      "ayah": 253
+    },
+    "end_surah": {
+      "number": 3,
+      "name_latin": "Ali 'Imran",
+      "ayah": 92
+    }
+  },
+  {
+    "number": 4,
+    "start_surah": {
+      "number": 3,
+      "name_latin": "Ali 'Imran",
+      "ayah": 93
+    },
+    "end_surah": {
+      "number": 4,
+      "name_latin": "An-Nisa'",
+      "ayah": 23
+    }
+  },
+  {
+    "number": 5,
+    "start_surah": {
+      "number": 4,
+      "name_latin": "An-Nisa'",
+      "ayah": 24
+    },
+    "end_surah": {
+      "number": 4,
+      "name_latin": "An-Nisa'",
+      "ayah": 147
+    }
+  },
+  {
+    "number": 6,
+    "start_surah": {
+      "number": 4,
+      "name_latin": "An-Nisa'",
+      "ayah": 148
+    },
+    "end_surah": {
+      "number": 5,
+      "name_latin": "Al-Ma'idah",
+      "ayah": 82
+    }
+  },
+  {
+    "number": 7,
+    "start_surah": {
+      "number": 5,
+      "name_latin": "Al-Ma'idah",
+      "ayah": 83
+    },
+    "end_surah": {
+      "number": 6,
+      "name_latin": "Al-An'am",
+      "ayah": 110
+    }
+  },
+  {
+    "number": 8,
+    "start_surah": {
+      "number": 6,
+      "name_latin": "Al-An'am",
+      "ayah": 111
+    },
+    "end_surah": {
+      "number": 7,
+      "name_latin": "Al-A'raf",
+      "ayah": 87
+    }
+  },
+  {
+    "number": 9,
+    "start_surah": {
+      "number": 7,
+      "name_latin": "Al-A'raf",
+      "ayah": 88
+    },
+    "end_surah": {
+      "number": 8,
+      "name_latin": "Al-Anfal",
+      "ayah": 40
+    }
+  },
+  {
+    "number": 10,
+    "start_surah": {
+      "number": 8,
+      "name_latin": "Al-Anfal",
+      "ayah": 41
+    },
+    "end_surah": {
+      "number": 9,
+      "name_latin": "At-Tawbah",
+      "ayah": 93
+    }
+  },
+  {
+    "number": 11,
+    "start_surah": {
+      "number": 9,
+      "name_latin": "At-Tawbah",
+      "ayah": 94
+    },
+    "end_surah": {
+      "number": 11,
+      "name_latin": "Hud",
+      "ayah": 5
+    }
+  },
+  {
+    "number": 12,
+    "start_surah": {
+      "number": 11,
+      "name_latin": "Hud",
+      "ayah": 6
+    },
+    "end_surah": {
+      "number": 12,
+      "name_latin": "Yusuf",
+      "ayah": 52
+    }
+  },
+  {
+    "number": 13,
+    "start_surah": {
+      "number": 12,
+      "name_latin": "Yusuf",
+      "ayah": 53
+    },
+    "end_surah": {
+      "number": 14,
+      "name_latin": "Ibrahim",
+      "ayah": 52
+    }
+  },
+  {
+    "number": 14,
+    "start_surah": {
+      "number": 15,
+      "name_latin": "Al-Hijr",
+      "ayah": 1
+    },
+    "end_surah": {
+      "number": 16,
+      "name_latin": "An-Nahl",
+      "ayah": 128
+    }
+  },
+  {
+    "number": 15,
+    "start_surah": {
+      "number": 17,
+      "name_latin": "Al-Isra'",
+      "ayah": 1
+    },
+    "end_surah": {
+      "number": 18,
+      "name_latin": "Al-Kahf",
+      "ayah": 74
+    }
+  },
+  {
+    "number": 16,
+    "start_surah": {
+      "number": 18,
+      "name_latin": "Al-Kahf",
+      "ayah": 75
+    },
+    "end_surah": {
+      "number": 20,
+      "name_latin": "Taha",
+      "ayah": 135
+    }
+  },
+  {
+    "number": 17,
+    "start_surah": {
+      "number": 21,
+      "name_latin": "Al-Anbiya'",
+      "ayah": 1
+    },
+    "end_surah": {
+      "number": 22,
+      "name_latin": "Al-Hajj",
+      "ayah": 78
+    }
+  },
+  {
+    "number": 18,
+    "start_surah": {
+      "number": 23,
+      "name_latin": "Al-Mu'minun",
+      "ayah": 1
+    },
+    "end_surah": {
+      "number": 25,
+      "name_latin": "Al-Furqan",
+      "ayah": 20
+    }
+  },
+  {
+    "number": 19,
+    "start_surah": {
+      "number": 25,
+      "name_latin": "Al-Furqan",
+      "ayah": 21
+    },
+    "end_surah": {
+      "number": 27,
+      "name_latin": "An-Naml",
+      "ayah": 55
+    }
+  },
+  {
+    "number": 20,
+    "start_surah": {
+      "number": 27,
+      "name_latin": "An-Naml",
+      "ayah": 56
+    },
+    "end_surah": {
+      "number": 29,
+      "name_latin": "Al-'Ankabut",
+      "ayah": 45
+    }
+  },
+  {
+    "number": 21,
+    "start_surah": {
+      "number": 29,
+      "name_latin": "Al-'Ankabut",
+      "ayah": 46
+    },
+    "end_surah": {
+      "number": 33,
+      "name_latin": "Al-Ahzab",
+      "ayah": 30
+    }
+  },
+  {
+    "number": 22,
+    "start_surah": {
+      "number": 33,
+      "name_latin": "Al-Ahzab",
+      "ayah": 31
+    },
+    "end_surah": {
+      "number": 36,
+      "name_latin": "Yasin",
+      "ayah": 27
+    }
+  },
+  {
+    "number": 23,
+    "start_surah": {
+      "number": 36,
+      "name_latin": "Yasin",
+      "ayah": 28
+    },
+    "end_surah": {
+      "number": 39,
+      "name_latin": "Az-Zumar",
+      "ayah": 31
+    }
+  },
+  {
+    "number": 24,
+    "start_surah": {
+      "number": 39,
+      "name_latin": "Az-Zumar",
+      "ayah": 32
+    },
+    "end_surah": {
+      "number": 41,
+      "name_latin": "Fussilat",
+      "ayah": 46
+    }
+  },
+  {
+    "number": 25,
+    "start_surah": {
+      "number": 41,
+      "name_latin": "Fussilat",
+      "ayah": 47
+    },
+    "end_surah": {
+      "number": 45,
+      "name_latin": "Al-Jasiyah",
+      "ayah": 37
+    }
+  },
+  {
+    "number": 26,
+    "start_surah": {
+      "number": 46,
+      "name_latin": "Al-Ahqaf",
+      "ayah": 1
+    },
+    "end_surah": {
+      "number": 51,
+      "name_latin": "Adz-Dzariyat",
+      "ayah": 30
+    }
+  },
+  {
+    "number": 27,
+    "start_surah": {
+      "number": 51,
+      "name_latin": "Adz-Dzariyat",
+      "ayah": 31
+    },
+    "end_surah": {
+      "number": 57,
+      "name_latin": "Al-Hadid",
+      "ayah": 29
+    }
+  },
+  {
+    "number": 28,
+    "start_surah": {
+      "number": 58,
+      "name_latin": "Al-Mujadalah",
+      "ayah": 1
+    },
+    "end_surah": {
+      "number": 66,
+      "name_latin": "At-Tahrim",
+      "ayah": 12
+    }
+  },
+  {
+    "number": 29,
+    "start_surah": {
+      "number": 67,
+      "name_latin": "Al-Mulk",
+      "ayah": 1
+    },
+    "end_surah": {
+      "number": 77,
+      "name_latin": "Al-Mursalat",
+      "ayah": 50
+    }
+  },
+  {
+    "number": 30,
+    "start_surah": {
+      "number": 78,
+      "name_latin": "An-Naba'",
+      "ayah": 1
+    },
+    "end_surah": {
+      "number": 114,
+      "name_latin": "An-Nas",
+      "ayah": 6
+    }
+  }
+]
