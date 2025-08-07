@@ -33,7 +33,7 @@ const JuzListScreen = () => {
       {/* Kolom Tengah: Info Surah Awal dan Akhir */}
       <View style={styles.juzInfoContainer}>
         <Text style={styles.juzTitle}>{`Juz ${item.number}`}</Text>
-        <Text style={styles.juzRange}>{`${item.start_surah.name_latin} Ayat ${item.start_surah.ayah} - ${item.end_surah.name_latin} Ayat ${item.end_surah.ayah}`}</Text>
+        <Text style={styles.juzRange}>Mulai Surah {`${item.start_surah.name_latin} : ${item.start_surah.ayah}`}</Text>
       </View>
     </TouchableOpacity>
   );

@@ -174,8 +174,8 @@ const styles = StyleSheet.create({
   searchContainer: {
     padding: 15,
     backgroundColor: '#F5F5DC',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    // borderBottomWidth: 1,
+    // borderBottomColor: '#ddd',
     flexDirection: 'row',
     alignItems: 'center',
     position: 'relative',
