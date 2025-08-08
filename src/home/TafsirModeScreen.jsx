@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -258,8 +258,8 @@ const TafsirModeScreen = ({ route, navigation }) => {
   const { surahNumber } = route.params;
   const isDarkMode = useColorScheme() === 'dark';
   
-  const surahChoice = surahData[Number(surahNumber)];
-  const surah = surahChoice[surahNumber]
+  // Perbaikan di sini: Menggunakan optional chaining untuk pengambilan data yang lebih aman
+  const surah = surahData[Number(surahNumber)]?.[surahNumber];
 
   if (!surah) {
     return (
@@ -271,13 +271,15 @@ const TafsirModeScreen = ({ route, navigation }) => {
 
   const arabicText = surah.text || {};
   const translations = surah.translations?.id?.text || {};
-  const tafsir = surah.tafsir?.id?.kemenag?.text || {};
-
   const ayahNumbers = Object.keys(arabicText);
 
+  const [selectedTafsir, setSelectedTafsir] = useState('kemenag');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [tafsirStates, setTafsirStates] = useState({});
 
-  useState(() => {
+  // Perbaikan di sini: Menggunakan useEffect untuk mereset state tafsirStates
+  // setiap kali surahNumber berubah.
+  useEffect(() => {
     const initialTafsirStates = {};
     ayahNumbers.forEach(ayah => {
       initialTafsirStates[ayah] = false;
@@ -294,6 +296,28 @@ const TafsirModeScreen = ({ route, navigation }) => {
     }));
   };
 
+  const getTafsirText = (ayahNumber) => {
+    const tafsirSources = {
+      kemenag: surah.tafsir?.id?.kemenag?.text,
+      ibnukatsir: surah.tafsir?.id?.ibnukatsir?.text,
+      almuyssar: surah.tafsir?.id?.almuyssar?.text,
+    };
+    return tafsirSources[selectedTafsir]?.[ayahNumber];
+  };
+
+  const tafsirOptions = [
+    { key: 'kemenag', label: 'Kemenag' },
+    { key: 'ibnukatsir', label: 'Ibnu Katsir' },
+    { key: 'almuyssar', label: 'Al-Muyassar' },
+  ];
+
+  const handleTafsirSelection = (key) => {
+    setSelectedTafsir(key);
+    setIsDropdownOpen(false);
+  };
+
+  const currentTafsirLabel = tafsirOptions.find(opt => opt.key === selectedTafsir).label;
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -304,12 +328,34 @@ const TafsirModeScreen = ({ route, navigation }) => {
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
             <Text style={styles.backButtonText}>«</Text>
           </TouchableOpacity>
+
           <View style={styles.headerTitleWrapper}>
-            <Text style={styles.surahNameArabic}>{surah.name}</Text>
             <Text style={styles.surahNameLatin}>{surah.name_latin}</Text>
             <Text style={styles.surahInfo}>{`${surah.number_of_ayah} Ayat`}</Text>
           </View>
-          <View style={styles.backButtonPlaceholder} />
+          
+          <View style={styles.dropdownContainer}>
+            <TouchableOpacity 
+              onPress={() => setIsDropdownOpen(!isDropdownOpen)} 
+              style={styles.dropdownButton}
+            >
+              <Text style={styles.dropdownButtonText}>{currentTafsirLabel}</Text>
+            </TouchableOpacity>
+
+            {isDropdownOpen && (
+              <View style={styles.dropdownList}>
+                {tafsirOptions.map((option) => (
+                  <TouchableOpacity
+                    key={option.key}
+                    style={styles.dropdownItem}
+                    onPress={() => handleTafsirSelection(option.key)}
+                  >
+                    <Text style={styles.dropdownItemText}>{option.label}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+          </View>
         </View>
 
         <ScrollView style={styles.contentContainer}>
@@ -327,15 +373,15 @@ const TafsirModeScreen = ({ route, navigation }) => {
               )}
 
               {/* Indonesian Tafsir (Commentary) */}
-              {tafsir[ayahNumber] && (
+              {getTafsirText(ayahNumber) && (
                 <View style={styles.tafsirContainer}>
                   <TouchableOpacity onPress={() => toggleTafsir(ayahNumber)}>
                     <Text style={styles.tafsirHeader}>
-                      Tafsir (Tap untuk {tafsirStates[ayahNumber] ? 'menutup' : 'membuka'})
+                      Tafsir {currentTafsirLabel} (Tap untuk {tafsirStates[ayahNumber] ? 'menutup' : 'membuka'})
                     </Text>
                   </TouchableOpacity>
                   {tafsirStates[ayahNumber] && (
-                    <Text style={styles.tafsirText}>{tafsir[ayahNumber]}</Text>
+                    <Text style={styles.tafsirText}>{getTafsirText(ayahNumber)}</Text>
                   )}
                 </View>
               )}
@@ -382,11 +428,9 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   headerTitleWrapper: {
-    alignItems: 'center',
+    alignItems: 'left',
     flex: 1,
-  },
-  backButtonPlaceholder: {
-    width: 44, // Lebar yang sama dengan tombol kembali untuk menyeimbangkan tata letak
+    marginHorizontal: 10,
   },
   surahNameArabic: {
     fontSize: 32,
@@ -395,17 +439,53 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   surahNameLatin: {
-    fontSize: 24,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#fff',
     marginTop: 5,
-    textAlign: 'center',
+    textAlign: 'left',
   },
   surahInfo: {
     fontSize: 16,
     color: '#ccc',
     marginTop: 5,
-    textAlign: 'center',
+    textAlign: 'left',
+  },
+  dropdownContainer: {
+    position: 'relative',
+  },
+  dropdownButton: {
+    backgroundColor: '#4E7E63',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+  },
+  dropdownButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  dropdownList: {
+    position: 'absolute',
+    top: '100%',
+    right: 0,
+    marginTop: 5,
+    backgroundColor: '#fff',
+    borderRadius: 8,
+    elevation: 5, // untuk bayangan di Android
+    shadowColor: '#000', // untuk bayangan di iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    zIndex: 1,
+  },
+  dropdownItem: {
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  dropdownItemText: {
+    color: '#333',
   },
   contentContainer: {
     padding: 15,

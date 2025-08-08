@@ -6,6 +6,7 @@ import SholatScreen from '../home/SholatScreen';
 import HomeScreen from '../home/HomeScreen';
 import AkunScreen from '../home/AkunScreen';
 import TafsirModeScreen from '../home/TafsirModeScreen';
+import MushafModeScreen from '../home/MushafModeScreen';
 
 // Import satu set aset gambar untuk ikon tab
 const HomeIcon = require('../assets/quran.png');
@@ -19,6 +20,8 @@ const MainStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="Home" component={MainNavigator} />
     <Stack.Screen name="TafsirMode" component={TafsirModeScreen} />
+    <Stack.Screen name="MushafMode" component={MushafModeScreen} />
+
   </Stack.Navigator>
 );
 

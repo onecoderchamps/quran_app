@@ -60,6 +60,8 @@ const SurahListScreen = ({ navigation }) => {
 
         // Navigasi ke layar 'TafsirMode' dan kirim nomor surah sebagai parameter
         navigation.navigate('TafsirMode', { surahNumber: Number(selectedSurah.number) });
+      } if (mode === "Quran Mode") {
+        navigation.navigate('MushafMode', { surahNumber: Number(selectedSurah.number) });
       } else {
         console.log(`Navigasi ke ${mode} untuk Surah ${selectedSurah.name_latin}`);
         // Tambahkan navigasi untuk mode lain di siniw
@@ -134,7 +136,7 @@ const SurahListScreen = ({ navigation }) => {
                 style={styles.modeButton}
                 onPress={() => handleModeSelect('Quran Mode')}
               >
-                <Text style={styles.modeButtonText}>Mushaf Madinah</Text>
+                <Text style={styles.modeButtonText}>Mushaf</Text>
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.modeButton}

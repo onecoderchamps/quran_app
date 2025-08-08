@@ -16,7 +16,7 @@ const HomeScreen = () => {
       
       {/* Header Baru */}
       <View style={styles.headerContainer}>
-        <Text style={styles.headerTitle}>MyQuran Madinah</Text>
+        <Text style={styles.headerTitle}>MyQuran</Text>
       </View>
 
       {/* Navigasi Tab */}
