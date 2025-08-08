@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Slider from '@react-native-community/slider';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+const NextIcon = require('../assets/next.png');
+const PrevIcon = require('../assets/prev.png');
+const PouseIcon = require('../assets/pouse.png');
+const PlayIcon = require('../assets/play.png');
+
 
 // Contoh data JSON untuk Surah Al-Fatihah.
-// Di aplikasi sungguhan, data ini bisa diimpor dari file terpisah.
 const surahData = {
     "1": {
         "number": "1",
@@ -30,75 +38,68 @@ const surahData = {
     }
 };
 
-// Mengonversi data JSON ke format array untuk FlatList
 const verses = Object.keys(surahData['1'].text).map(ayahNumber => ({
     ayahNumber,
     text: surahData['1'].text[ayahNumber],
     audioFile: surahData['1'].audio[ayahNumber],
 }));
 
-const QuranAudioPlayer = () => {
-    // State untuk mengelola status pemutar audio
+const QuranAudioPlayer = ({ route, navigation }) => {
     const [isPlaying, setIsPlaying] = useState(false);
     const [currentAyahIndex, setCurrentAyahIndex] = useState(0);
+    const [playbackProgress, setPlaybackProgress] = useState(0);
 
-    // Fungsi untuk memutar audio
+    const audioDuration = 2000; // Simulasi durasi audio 2 detik per ayat
+    const totalAyahCount = verses.length;
+
     const handlePlayPause = () => {
         setIsPlaying(prev => !prev);
     };
 
-    // Efek untuk menyimulasikan pemutaran audio secara otomatis
+    const playNext = () => {
+        if (currentAyahIndex < totalAyahCount - 1) {
+            const nextIndex = currentAyahIndex + 1;
+            setCurrentAyahIndex(nextIndex);
+            setPlaybackProgress(0);
+        } else {
+            setCurrentAyahIndex(0);
+            setIsPlaying(false);
+            setPlaybackProgress(0);
+        }
+    };
+
+    const playPrevious = () => {
+        if (currentAyahIndex > 0) {
+            const prevIndex = currentAyahIndex - 1;
+            setCurrentAyahIndex(prevIndex);
+            setPlaybackProgress(0);
+        }
+    };
+
     useEffect(() => {
         let interval;
         if (isPlaying) {
-            // Simulasi pemutaran ayat berikutnya setiap 2 detik
             interval = setInterval(() => {
-                setCurrentAyahIndex(prevIndex => {
-                    const nextIndex = prevIndex + 1;
-                    if (nextIndex < verses.length) {
-                        // Di aplikasi sungguhan, di sini Anda akan memuat dan memutar audio baru
-                        console.log(`Memainkan audio untuk ayat ke-${verses[nextIndex].ayahNumber}`);
-                        return nextIndex;
+                setPlaybackProgress(prevProgress => {
+                    // Simulasi progress bar
+                    if (prevProgress < 100) {
+                        return prevProgress + (100 / (audioDuration / 100)); // Update every 100ms
                     } else {
-                        // Jika sudah selesai, kembali ke awal dan berhenti
-                        setIsPlaying(false);
+                        // Jika sudah selesai, pindah ke ayat berikutnya
+                        playNext();
                         return 0;
                     }
                 });
-            }, 2000);
+            }, 100);
         } else {
             clearInterval(interval);
         }
 
         return () => clearInterval(interval);
-    }, [isPlaying, verses.length]);
-
-    // Fungsi untuk melompat ke ayat berikutnya
-    const playNext = () => {
-        if (currentAyahIndex < verses.length - 1) {
-            const nextIndex = currentAyahIndex + 1;
-            setCurrentAyahIndex(nextIndex);
-            // Di sini Anda akan memuat dan memutar audio untuk ayat berikutnya
-            console.log(`Melompat ke audio untuk ayat ke-${verses[nextIndex].ayahNumber}`);
-        } else {
-            // Kembali ke awal jika sudah di akhir
-            setCurrentAyahIndex(0);
-            setIsPlaying(false);
-        }
-    };
-
-    // Fungsi untuk melompat ke ayat sebelumnya
-    const playPrevious = () => {
-        if (currentAyahIndex > 0) {
-            const prevIndex = currentAyahIndex - 1;
-            setCurrentAyahIndex(prevIndex);
-            // Di sini Anda akan memuat dan memutar audio untuk ayat sebelumnya
-            console.log(`Melompat ke audio untuk ayat ke-${verses[prevIndex].ayahNumber}`);
-        }
-    };
+    }, [isPlaying, currentAyahIndex]);
 
     const renderItem = ({ item, index }) => (
-        <TouchableOpacity 
+        <TouchableOpacity
             style={[
                 styles.verseContainer,
                 currentAyahIndex === index && styles.highlightedVerse
@@ -106,7 +107,7 @@ const QuranAudioPlayer = () => {
             onPress={() => {
                 setCurrentAyahIndex(index);
                 setIsPlaying(true);
-                // Di aplikasi sungguhan, di sini Anda akan memuat dan memutar audio yang dipilih
+                setPlaybackProgress(0);
             }}
         >
             <Text style={styles.ayahText}>{item.text}</Text>
@@ -114,9 +115,20 @@ const QuranAudioPlayer = () => {
     );
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Surah {surahData['1'].name_latin} - {surahData['1'].name}</Text>
-            
+        <SafeAreaView style={styles.container}>
+            <View style={styles.header}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Text style={styles.backButtonText}>«</Text>
+                </TouchableOpacity>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>Al-Fatihah</Text>
+                    <Text style={styles.subtitle}>
+                        Surah {surahData['1'].name_latin}
+                    </Text>
+                </View>
+                <View style={{ width: 30 }} />
+            </View>
+
             <FlatList
                 data={verses}
                 renderItem={renderItem}
@@ -126,38 +138,68 @@ const QuranAudioPlayer = () => {
 
             <View style={styles.playerControls}>
                 <Text style={styles.currentAyahText}>
-                    Ayat: {verses[currentAyahIndex]?.ayahNumber}
+                    Ayat: {verses[currentAyahIndex]?.ayahNumber} of {totalAyahCount}
                 </Text>
+
+                <Slider
+                    style={styles.progressBar}
+                    minimumValue={0}
+                    maximumValue={100}
+                    value={playbackProgress}
+                    onSlidingComplete={value => {
+                        // Di aplikasi sungguhan, ini akan digunakan untuk seek audio
+                    }}
+                    minimumTrackTintColor="#1db954"
+                    maximumTrackTintColor="#535353"
+                    thumbTintColor="#FFFFFF"
+                />
+
                 <View style={styles.buttonRow}>
                     <TouchableOpacity onPress={playPrevious} style={styles.controlButton}>
-                        <Text style={styles.controlText}>Prev</Text>
+                        <Image source={PrevIcon} style={{ width: 24, height: 24 }} />;
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={handlePlayPause} style={styles.controlButton}>
-                        <Text style={styles.controlText}>
-                            {isPlaying ? 'Pause' : 'Play'}
-                        </Text>
+                    <TouchableOpacity onPress={handlePlayPause} style={styles.playPauseButton}>
+                        {!isPlaying &&
+                            <Image source={PlayIcon} style={{ width: 24, height: 24 }} />
+                        }
+                        {isPlaying &&
+                            <Image source={PouseIcon} style={{ width: 24, height: 24 }} />
+                        }
                     </TouchableOpacity>
                     <TouchableOpacity onPress={playNext} style={styles.controlButton}>
-                        <Text style={styles.controlText}>Next</Text>
+                        <Image source={NextIcon} style={{ width: 24, height: 24 }} />;
                     </TouchableOpacity>
                 </View>
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#121212',
         padding: 16,
     },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        textAlign: 'center',
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
         marginBottom: 20,
-        color: '#333',
+    },
+    title: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        color: '#fff',
+    },
+    backButtonText: {
+        fontSize: 24,
+        color: '#fff',
+    },
+    subtitle: {
+        fontSize: 16,
+        color: '#b3b3b3',
+        marginTop: 4,
     },
     verseList: {
         flex: 1,
@@ -165,49 +207,57 @@ const styles = StyleSheet.create({
     verseContainer: {
         paddingVertical: 15,
         paddingHorizontal: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
+        marginBottom: 10,
+        borderRadius: 8,
     },
     highlightedVerse: {
-        backgroundColor: '#e3f2fd',
-        borderRadius: 8,
+        backgroundColor: '#282828',
     },
     ayahText: {
         fontSize: 22,
         textAlign: 'right',
         lineHeight: 40,
         fontFamily: 'sans-serif',
-        color: '#444',
+        color: '#fff',
     },
     playerControls: {
         marginTop: 20,
         padding: 15,
-        backgroundColor: '#f5f5f5',
+        backgroundColor: '#282828',
         borderRadius: 12,
         alignItems: 'center',
     },
     currentAyahText: {
-        fontSize: 18,
+        fontSize: 16,
         fontWeight: '600',
-        color: '#555',
+        color: '#fff',
         marginBottom: 10,
+    },
+    progressBar: {
+        width: '100%',
+        height: 40,
     },
     buttonRow: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        width: '100%',
+        alignItems: 'center',
+        width: '80%',
+        marginTop: 10,
     },
     controlButton: {
-        backgroundColor: '#007bff',
-        paddingVertical: 10,
-        paddingHorizontal: 25,
-        borderRadius: 25,
-        elevation: 2,
+        width: 50,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    controlText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: 'bold',
+    playPauseButton: {
+        backgroundColor: '#1db954',
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 5,
     },
 });
 

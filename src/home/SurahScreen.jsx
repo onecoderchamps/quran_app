@@ -41,7 +41,7 @@ const SurahListScreen = ({ navigation }) => {
     });
     setFilteredQuranList(filteredData);
   };
-  
+
   const clearSearch = () => {
     setSearchQuery('');
   };
@@ -60,9 +60,12 @@ const SurahListScreen = ({ navigation }) => {
 
         // Navigasi ke layar 'TafsirMode' dan kirim nomor surah sebagai parameter
         navigation.navigate('TafsirMode', { surahNumber: Number(selectedSurah.number) });
-      } if (mode === "Quran Mode") {
+      } else if (mode === "Quran Mode") {
         navigation.navigate('MushafMode', { surahNumber: Number(selectedSurah.number) });
-      } else {
+      } else if (mode === "Audio Mode") {
+        navigation.navigate('MurotalMode', { surahNumber: Number(selectedSurah.number) });
+      }
+      else {
         console.log(`Navigasi ke ${mode} untuk Surah ${selectedSurah.name_latin}`);
         // Tambahkan navigasi untuk mode lain di siniw
       }
